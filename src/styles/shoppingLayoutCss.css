@@ -1,0 +1,50 @@
+.font-size-0-8rem {
+    font-size: 0.8rem !important;
+}
+
+.whitesmoke-color {
+    color: whitesmoke;
+}
+
+.red-color-hover:hover {
+    color: #d80007;
+}
+
+
+.category-button {
+  text-transform: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: black;
+  position: relative;
+  padding-bottom: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.category-button:hover {
+  color:#d80007;
+}
+
+.category-button.active {
+  color: #d80007;
+}
+
+.category-underline {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: #d80007;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.category-button.active .category-underline {
+  transform: scaleX(1);
+}
+

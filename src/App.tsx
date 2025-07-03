@@ -1,8 +1,9 @@
 import React from 'react';
+import ShoppingLayout from './layouts/ShoppingLayout';
 
 function App() {
   return (
-   <h1>Hello </h1>
+   <ShoppingLayout/>
   );
 }
 

@@ -24,13 +24,19 @@
 }
 
 .category-button:hover {
-  color:#d80007;
+  color: #d80007;
+}
+
+/* Show underline on hover */
+.category-button:hover .category-underline {
+  transform: scaleX(1);
 }
 
 .category-button.active {
   color: #d80007;
 }
 
+/* Underline base state */
 .category-underline {
   content: '';
   position: absolute;
@@ -44,7 +50,29 @@
   transition: transform 0.3s ease-in-out;
 }
 
+/* Keep underline if active */
 .category-button.active .category-underline {
   transform: scaleX(1);
 }
 
+.favorite-button::after {
+  content: "✨";
+  position: absolute;
+  animation: sparkle 0.6s ease-out;
+  top: -10px;
+  left: -10px;
+  font-size: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}

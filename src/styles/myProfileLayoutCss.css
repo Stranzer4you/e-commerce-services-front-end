@@ -1,0 +1,85 @@
+/* File: accountLayout.css */
+
+.account-container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===== Banner Styles ===== */
+.account-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  background: transparent;
+  border: none;
+  color: #ef4242 !important;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 12px;
+  text-transform: none;
+}
+
+.back-button:hover {
+  background-color: transparent;
+}
+
+.banner-title {
+  color: #ef4242;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.banner-spacer {
+  width: 80px; /* same width as back-button for symmetry */
+}
+
+/* ===== Body Layout ===== */
+.account-body {
+  display: flex;
+  gap: 24px;
+  min-height: 500px;
+}
+
+/* ===== Sidebar ===== */
+.account-sidebar {
+  background-color: #e8e8e8;
+  padding: 16px;
+  border-radius: 12px;
+  width: 220px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-item {
+  color: #09a5ff !important;
+  font-weight: 500;
+}
+
+.sidebar-icon {
+  color: #2e91fa !important;
+}
+
+.sidebar-item:hover {
+  background-color: rgba(216, 0, 7, 0.08);
+}
+
+/* ===== Main Content ===== */
+.account-content {
+  flex-grow: 1;
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+

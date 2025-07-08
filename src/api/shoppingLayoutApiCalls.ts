@@ -8,8 +8,8 @@ export const fetchAllCategories = async () =>{
 
  try{
     const res = await ApiCall.get(`inventory/categories`)
-    if (res.status === 200 || res.status ===201) {
-      return res.data
+    if (res?.status === 200 || res?.status ===201) {
+      return res?.data
     }
     return {}
   } catch (e) {
@@ -25,8 +25,8 @@ export const fetchProducts = async (categoryId?: number | null, searchText?: str
     if (categoryId) params.append("categoryId", categoryId.toString());
     if (searchText && searchText.trim()) params.append("searchText", searchText.trim());
     const response = await ApiCall.get(`inventory?${params.toString()}`);
-    if (response.status === 200 || response.status === 201) {
-      return response.data
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data
     }
     return {}
 
@@ -40,8 +40,8 @@ export const fetchProducts = async (categoryId?: number | null, searchText?: str
 export const fetchWishlistCartCount = async (customerId: number) => {
   try {
     const response = await ApiCall.get(`/customers/wishlist/cart/count/${customerId}`)
-    if (response.status === 200 || response.status === 201) {
-      return response.data
+    if (response?.status === 200 || response?.status === 201) {
+      return response?.data
     }
     return {}
   }
@@ -80,6 +80,20 @@ export const addToWishlist = async (customerId: any, productId: any) => {
 export const removeFromWishlist = async (customerId: any, productId: any) => {
   try {
     const response = await ApiCall.delete(`wishlist`, { data: {
+        customerId: customerId,
+        productId: productId
+      }})
+      return response
+  }
+  catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export const removeFromCart = async (customerId: any, productId: any) => {
+  try {
+    const response = await ApiCall.delete(`cart`, { data: {
         customerId: customerId,
         productId: productId
       }})

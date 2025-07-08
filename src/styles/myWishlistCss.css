@@ -1,0 +1,123 @@
+
+
+/* Wishlist page container */
+.wishlist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Heading: My Wishlist (count) */
+.wishlist-heading {
+  font-weight: 600;
+  color: #222;
+  font-size: 1.25rem;
+}
+
+/* Grid of wishlist cards */
+.wishlist-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+/* Wishlist card with horizontal layout */
+.wishlist-card {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  border-radius: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+  gap: 16px;
+}
+
+/* Product image */
+.wishlist-card-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Product details beside image */
+.wishlist-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;  /* Align children to the top */
+  padding: 0;
+}
+
+/* Product name */
+.product-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
+}
+
+/* Product price */
+.product-price {
+  color: #d80007;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* Delete icon top-right */
+.delete-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #d80007 !important;
+  transition: background-color 0.2s;
+}
+
+.delete-icon:hover {
+  background-color: rgba(216, 0, 7, 0.08);
+  border-radius: 50%;
+}
+
+/* Product image (left side) */
+.wishlist-card-img {
+  width: 120px !important;
+  height: 120px !important;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-right: 16px;
+}
+
+/* Content box: name & price */
+.wishlist-card-content {
+  padding: 0;
+  flex-grow: 1;
+}
+
+/* Product name */
+.product-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+/* Product price */
+.product-price {
+  color: #d80007;
+  font-size: 0.9rem;
+}
+
+/* Delete icon (top-right corner) */
+.delete-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #d80007;
+  transition: background-color 0.2s;
+}
+
+.delete-icon:hover {
+  background-color: rgba(216, 0, 7, 0.08);
+  border-radius: 50%;
+}

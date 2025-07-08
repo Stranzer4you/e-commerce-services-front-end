@@ -9,6 +9,7 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ProductCard from "../components/shoppingComponents/ProductCard";
+import { useNavigate } from "react-router-dom";
 
 
 type ProductCategory = {
@@ -34,6 +35,8 @@ type Product = {
 
 const ShoppingLayout = () =>{
 
+      const navigate = useNavigate();
+
      const [userDetails, setUserDetails] = useState({
         "id":1,
         "userName": "Satish",
@@ -57,9 +60,9 @@ const ShoppingLayout = () =>{
             fetchWishlistCartCount(userDetails.id),
         ]);
 
-        setProductCategories(categoryRes.data);
-        setWishListedCount(wishlistCartCountRes.data.wishlistCount);
-        setCartItemsCount(wishlistCartCountRes.data.cartCount);
+        setProductCategories(categoryRes?.data);
+        setWishListedCount(wishlistCartCountRes?.data?.wishlistCount);
+        setCartItemsCount(wishlistCartCountRes?.data?.cartCount);
     };
     loadData();
 }, []);
@@ -70,7 +73,7 @@ const ShoppingLayout = () =>{
                 const categoryId = selectedCategory?.id ?? null;
                 const search = searchText?.trim() ?? null;
                 const result = await fetchProducts(categoryId, search);
-                setProducts(result.data);
+                setProducts(result?.data);
             } catch (err) {
                 console.error("Error fetching products:", err);
             }
@@ -83,7 +86,7 @@ const ShoppingLayout = () =>{
     const handleAddToWishlist = async (id:number,productId:number)=>{
         const result = await addToWishlist(id,productId);
         if(result?.status ===200 || result?.status===201){
-            setWishListedCount(result.data.data);
+            setWishListedCount(result?.data?.data);
             handleWishlistUpdate(productId,true);
         }
     }
@@ -91,7 +94,7 @@ const ShoppingLayout = () =>{
     const handleRemoveFromWishlist = async (id:number,productId:number)=>{
         const result = await removeFromWishlist(id,productId);
         if(result?.status ===200 || result?.status ===201){
-            setWishListedCount(result.data.data);
+            setWishListedCount(result?.data?.data);
             handleWishlistUpdate(productId,false);
         }
     }
@@ -99,7 +102,7 @@ const ShoppingLayout = () =>{
     const handleAddToCart = async (id:number,productId:number,quantity:number)=>{
         const result = await addToCart(id,productId,quantity);
         if(result?.status ===200 || result?.status===201){
-            setCartItemsCount(result.data.data);
+            setCartItemsCount(result?.data?.data);
         }
     }
 
@@ -139,6 +142,7 @@ const ShoppingLayout = () =>{
                         <Typography
                             sx={{ cursor: 'pointer', textDecoration: 'none' }}
                             className="font-size-0-8rem whitesmoke-color red-color-hover"
+                            onClick={() => navigate("/account")}
                         >
                             My Account
                         </Typography>
@@ -195,7 +199,7 @@ const ShoppingLayout = () =>{
                 </Box>
                 <Box display="flex" gap={6}>
                     <Box display="flex" flexDirection="column" alignItems="center">
-                        <IconButton onClick={() => console.log('Cart clicked')} sx={{
+                        <IconButton onClick={() => navigate('account/wishlist')} sx={{
                             padding: 0, margin: 0,  color: 'whitesmoke',
                             '&:hover': {
                                 backgroundColor: 'transparent',
@@ -230,7 +234,7 @@ const ShoppingLayout = () =>{
                     </Box>
 
                     <Box display="flex" flexDirection="column" alignItems="center">
-                       <IconButton onClick={() => console.log('Cart clicked')}  sx={{
+                       <IconButton onClick={() => navigate('/account/cart')}  sx={{
                             padding: 0, margin: 0, color: 'whitesmoke',
                             '&:hover': {
                             backgroundColor: 'transparent',

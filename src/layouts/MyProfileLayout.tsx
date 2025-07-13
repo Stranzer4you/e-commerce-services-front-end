@@ -39,11 +39,6 @@ const MyProfileLayout = () => {
               <ListItemText primary="My Orders" />
             </ListItemButton>
 
-            <ListItemButton className="sidebar-item" onClick={() => navigate("address")}> 
-              <ListItemIcon className="sidebar-icon"><HomeIcon /></ListItemIcon>
-              <ListItemText primary="My Address" />
-            </ListItemButton>
-
             <ListItemButton className="sidebar-item" onClick={() => navigate("notifications")}> 
               <ListItemIcon className="sidebar-icon"><NotificationsIcon /></ListItemIcon>
               <ListItemText primary="Notifications" />

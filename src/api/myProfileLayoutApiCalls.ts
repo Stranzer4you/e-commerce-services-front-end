@@ -32,5 +32,92 @@ export const fetchCustomerCartDetails = async (customerId:number)=>{
       }
 }
 
+export const updateProductCartDetails = async (customerId: any, productId: any, quantity: any,price:any) => {
+  try {
+    const response = await ApiCall.put(`cart`,[ { customerId: customerId, productId: productId, quantity: quantity,price:price }])
+      return response
+  }
+  catch (e) {
+    console.error(e);
+    return null;
+  }
+}
 
-// export const removeProduct
+export const placeOrderApi = async (customerId: number, totalPrice: number, cartDetails: any) => {
+  try {
+    const items = cartDetails.map((x: any) => ({
+      productId: x.productId,
+      quantity: x.quantity,
+      amountPaid: x.price
+    }));
+
+    const payload = {
+      customerId: customerId,
+      totalAmount: totalPrice,
+      ordersDetails: items 
+    };
+
+    const response = await ApiCall.post(`orders`, payload);
+    return response;
+  }
+  catch (e) {
+    console.error(e);
+    return null
+  }
+
+}
+
+export const clearCartApi = async (customerId:number)=>{
+  try{
+          const res = await ApiCall.delete(`cart/all?customerId=${customerId}`);
+          return res;      
+     }
+  catch(e){
+    console.error(e)
+    return null;
+  }
+}
+
+export const fetchCustomerOrdersDetails = async (customerId: number, status?: number) => {
+  try {
+    const params = new URLSearchParams();
+
+    if (customerId) params.append("customerId", customerId.toString());
+
+    if (status !== undefined) {
+      params.append("orderStatus", status.toString());
+    }
+
+    const response = await ApiCall.get(`orders?${params.toString()}`);
+    if (response?.status === 200 || response?.status === 201) {
+      return response.data; 
+    }
+    return {};
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
+
+export const fetchCustomerNotificationsDetails = async(customerId:number,notificationTypeId?:number,moduleId?:number) =>{
+  try{
+    const params = new URLSearchParams();
+
+    if(customerId) params.append("customerId",customerId.toString());
+    if(notificationTypeId) params.append("notificationTypeId",notificationTypeId.toString());
+    if(moduleId) params.append("moduleId",moduleId.toString());
+
+    const response = await ApiCall.get(`notifications?${params.toString()}`)
+
+    if (response?.status === 200 || response?.status === 201) {
+      return response.data; 
+    }
+    return {};
+  }
+  catch(e){
+    console.error(e);
+    return null;
+  }
+}
+

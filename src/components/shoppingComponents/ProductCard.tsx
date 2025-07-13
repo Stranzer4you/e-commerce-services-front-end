@@ -27,8 +27,9 @@ type ProductProps = {
   isWishListed:boolean;
   isInCart:boolean;
   removeFromWishlist: any;
+  handleGotoCart:any
 };
-const ProductCard: React.FC<ProductProps> = ({ id, productName, imageUrl, rating, price,addToCart,addToWishlist,customerId,isWishListed,isInCart,removeFromWishlist}) => {
+const ProductCard: React.FC<ProductProps> = ({ id, productName, imageUrl, rating, price,addToCart,addToWishlist,customerId,isWishListed,isInCart,removeFromWishlist,handleGotoCart}) => {
        return (
         <Card
             sx={{
@@ -88,11 +89,11 @@ const ProductCard: React.FC<ProductProps> = ({ id, productName, imageUrl, rating
                 <Button
                     variant="contained"
                     size="small"
-                    color="primary"
+                    color={ isInCart ? "success":"primary"}
                     endIcon={<ShoppingCartIcon />}
-                    onClick={()=>{addToCart(customerId,id,1)}}
+                    onClick={()=>{isInCart ?   handleGotoCart() : addToCart(customerId,id,1,price)}}
                 >
-                    Add
+                    {isInCart ? 'Go To' : 'Add'}
                 </Button>
             </CardActions>
         </Card>

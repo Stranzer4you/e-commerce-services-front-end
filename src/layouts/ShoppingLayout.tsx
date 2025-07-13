@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../styles/shoppingLayoutCss.css"
 import {fetchProducts,fetchAllCategories, addToWishlist, addToCart, fetchWishlistCartCount, removeFromWishlist} from "../api/shoppingLayoutApiCalls"
-import { AppBar, Badge, Box, Button, IconButton, TextField, Toolbar, Typography } from "@mui/material";
+import { AppBar, Badge, Box, Button, IconButton, Snackbar, TextField, Toolbar, Typography } from "@mui/material";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -10,6 +10,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ProductCard from "../components/shoppingComponents/ProductCard";
 import { useNavigate } from "react-router-dom";
+import MuiAlert, { AlertColor } from "@mui/material/Alert";
+
 
 
 type ProductCategory = {
@@ -44,6 +46,17 @@ const ShoppingLayout = () =>{
         "email": "satishabothula12@gmail.com",
         "address": "535128 Vizianagram"
     })
+
+    const [snackbar, setSnackbar] = useState<{
+        open: boolean;
+        message: string;
+        severity: AlertColor;
+    }>({
+        open: false,
+        message: "",
+        severity: "success"
+    });
+
 
     const [selectedCategory, setSelectedCategory] = useState<ProductCategory | null>(null);
     const [searchText, setSearchText] = useState<any>('');
@@ -88,6 +101,7 @@ const ShoppingLayout = () =>{
         if(result?.status ===200 || result?.status===201){
             setWishListedCount(result?.data?.data);
             handleWishlistUpdate(productId,true);
+            showSnackbar("Added To Wishlist !")
         }
     }
 
@@ -96,14 +110,21 @@ const ShoppingLayout = () =>{
         if(result?.status ===200 || result?.status ===201){
             setWishListedCount(result?.data?.data);
             handleWishlistUpdate(productId,false);
+            showSnackbar("Removed from Wishlist !")
         }
     }
     
-    const handleAddToCart = async (id:number,productId:number,quantity:number)=>{
-        const result = await addToCart(id,productId,quantity);
+    const handleAddToCart = async (id:number,productId:number,quantity:number,price:any)=>{
+        const result = await addToCart(id,productId,quantity,price);
         if(result?.status ===200 || result?.status===201){
             setCartItemsCount(result?.data?.data);
+            addToCartUpdate(productId);
+            showSnackbar("Added to Cart !");
         }
+    }
+
+    const handleGotoCart = async ()=>{
+        navigate('/account/cart');
     }
 
     const handleWishlistUpdate = async (productId:number,status:boolean)=>{
@@ -114,6 +135,27 @@ const ShoppingLayout = () =>{
             )
         );
     };
+
+     const addToCartUpdate = async (productId:number)=>{
+        setProducts(prevProducts =>
+            prevProducts.map(product =>
+                product.id === productId ? { ...product, isInCart: true } : product
+            )
+        );
+    };
+
+
+        const showSnackbar = (message: string, severity: AlertColor = "success") => {
+            setSnackbar({
+                open: true,
+                message,
+                severity
+            });
+
+            setTimeout(() => {
+                setSnackbar(prev => ({ ...prev, open: false }));
+            }, 3000);
+        };
     
 
     return(
@@ -302,7 +344,7 @@ const ShoppingLayout = () =>{
                     {
                         products.length > 0 ? (
                             products.map((product) => (
-                                <ProductCard key={product.id} {...product} addToCart={handleAddToCart} addToWishlist={handleAddToWishlist} customerId={userDetails.id} removeFromWishlist={handleRemoveFromWishlist}/>
+                                <ProductCard key={product.id} {...product} addToCart={handleAddToCart} addToWishlist={handleAddToWishlist} customerId={userDetails.id} removeFromWishlist={handleRemoveFromWishlist} handleGotoCart={handleGotoCart}/>
                             ))
                         ) : (
                             <h3>No Products</h3>
@@ -310,6 +352,16 @@ const ShoppingLayout = () =>{
                     }
                 </Box>
             </Box>
+
+                <Snackbar
+                    open={snackbar.open}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                >
+                    <MuiAlert severity={snackbar.severity} variant="filled" sx={{ width: '100%' }}>
+                        {snackbar.message}
+                    </MuiAlert>
+                </Snackbar>
+
     
         </>
     )

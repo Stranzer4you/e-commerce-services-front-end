@@ -4,7 +4,7 @@ import { Box, Typography, IconButton, Card, CardMedia, CardContent, Rating, Butt
 import DeleteIcon from '@mui/icons-material/Delete';
 import "../../styles/myWishlistCss.css";
 import { fetchCustomerWishlistDetails } from "../../api/myProfileLayoutApiCalls";
-import { removeFromWishlist } from "../../api/shoppingLayoutApiCalls";
+import { addToCart, removeFromWishlist } from "../../api/shoppingLayoutApiCalls";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 
@@ -41,6 +41,15 @@ const MyWishlist = () => {
     
   };
 
+  const handleAddToCart = async (customerId: any, productId: any, quantity: any,price:any)=>{
+    const res = await addToCart(customerId,productId,quantity,price);
+    if(res?.status === 200 || res?.status ===201){
+       setWishlistDetails(prev =>
+       prev.filter(x=> x.productId !== productId));
+       removeFromWishlist(1,productId);
+    }
+  }
+
   return (
     <Box className="wishlist-container">
       <Typography variant="h6" className="wishlist-heading">
@@ -72,7 +81,7 @@ const MyWishlist = () => {
                     size="small"
                     color="primary"
                     endIcon={<ShoppingCartIcon />}
-                    // onClick={()=>{addToCart(customerId,id,1)}}
+                    onClick={()=>{handleAddToCart(1,item.productId,1,item.price)}}
                     sx={{width:"15px",marginTop:"4px"}}
                 >
                     Add

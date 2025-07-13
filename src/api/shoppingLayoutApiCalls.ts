@@ -53,9 +53,9 @@ export const fetchWishlistCartCount = async (customerId: number) => {
 }
 
 
-export const addToCart = async (customerId: any, productId: any, quantity: any) => {
+export const addToCart = async (customerId: any, productId: any, quantity: any,price:any) => {
   try {
-    const response = await ApiCall.post(`cart`, { customerId: customerId, productId: productId, quantity: quantity })
+    const response = await ApiCall.post(`cart`, { customerId: customerId, productId: productId, quantity: quantity ,price:price})
       return response
   }
   catch (e) {
@@ -91,11 +91,12 @@ export const removeFromWishlist = async (customerId: any, productId: any) => {
   }
 }
 
-export const removeFromCart = async (customerId: any, productId: any) => {
+export const removeFromCart = async (customerId: any, productId: any,cartId:number) => {
   try {
     const response = await ApiCall.delete(`cart`, { data: {
         customerId: customerId,
-        productId: productId
+        productId: productId,
+        cartId:cartId
       }})
       return response
   }
